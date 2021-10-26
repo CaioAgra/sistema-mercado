@@ -1,0 +1,58 @@
+
+# Spring properties
+server:
+  port: 8080
+  servlet:
+    context-path: /mercado
+
+logging:
+  level:
+    br: DEBUG #TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF
+    #com.zaxxer: DEBUG
+    #$org.hibernate: DEBUG
+    #o.hibernate: DEBUG
+
+management:
+  endpoint:
+    health:
+      show-details: "always"
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+spring:
+  application:
+    name: mercado
+  profiles:
+    active: local
+  jpa:
+    open-in-view: true
+
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=sch_mercado
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        enable_lazy_load_no_trans: true
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
